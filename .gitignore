@@ -45,3 +45,13 @@ wrangler.toml
 .vscode
 
 app/api/update-sitemaps
+
+# Additional changes from the code block
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.history/
+*.log
+.idea/
+.vscode/

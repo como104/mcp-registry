@@ -1,5 +1,6 @@
 import { Project } from "@/types/project";
 import { getSupabaseClient } from "./db";
+import serversData from "@/pagejson/servers.json";
 
 export enum ProjectStatus {
   Created = "created",
@@ -66,15 +67,7 @@ export async function getProjects(
 }
 
 export async function getProjectsCount(): Promise<number> {
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from("projects")
-    .select("count")
-    .eq("status", ProjectStatus.Created);
-
-  if (error) return 0;
-
-  return data?.[0]?.count || 0;
+  return serversData.servers.length;
 }
 
 export async function getProjectsCountByCategory(
@@ -117,20 +110,9 @@ export async function getFeaturedProjects(
   page: number,
   limit: number
 ): Promise<Project[]> {
-  const supabase = getSupabaseClient();
-
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("is_featured", true)
-    .eq("status", ProjectStatus.Created)
-    .order("sort", { ascending: false })
-    .order("created_at", { ascending: false })
-    .range((page - 1) * limit, page * limit - 1);
-
-  if (error) return [];
-
-  return data;
+  const start = (page - 1) * limit;
+  const end = page * limit;
+  return serversData.servers.slice(start, end);
 }
 
 export async function getRandomProjects(
@@ -156,22 +138,14 @@ export async function getProjectsWithKeyword(
   page: number,
   limit: number
 ): Promise<Project[]> {
-  const supabase = getSupabaseClient();
+  const filteredProjects = serversData.servers.filter((project) => {
+    const searchStr = `${project.name} ${project.title} ${project.description}`.toLowerCase();
+    return searchStr.includes(keyword.toLowerCase());
+  });
 
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*")
-    .or(
-      `name.ilike.%${keyword}%,title.ilike.%${keyword}%,description.ilike.%${keyword}%`
-    )
-    .eq("status", ProjectStatus.Created)
-    .order("sort", { ascending: false })
-    .order("created_at", { ascending: false })
-    .range((page - 1) * limit, page * limit - 1);
-
-  if (error) return [];
-
-  return data;
+  const start = (page - 1) * limit;
+  const end = page * limit;
+  return filteredProjects.slice(start, end);
 }
 
 export async function getProjectsWithoutSummary(

@@ -1,0 +1,55 @@
+{
+  "servers": [
+    {
+      "name": "github",
+      "title": "Github",
+      "description": "Repository management, file operations, and GitHub API integration",
+      "author_name": "modelcontextprotocol",
+      "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+      "url": "https://mcp.so/server/github/modelcontextprotocol",
+      "target": "_blank",
+      "created_at": "2024-02-01T00:00:00Z",
+      "tags": ["github", "repository-management"],
+      "features": [
+        "Automatic branch creation for file updates and pushes",
+        "Comprehensive error handling with clear messages",
+        "Preservation of Git history during operations",
+        "Support for batch file operations",
+        "Advanced search capabilities across repositories"
+      ]
+    },
+    {
+      "name": "minimax-mcp",
+      "title": "MiniMax MCP",
+      "description": "Official MiniMax Model Context Protocol (MCP) server that enables interaction with powerful Text to Speech and video generation APIs",
+      "author_name": "MiniMax",
+      "avatar_url": "/images/minimax.png",
+      "url": "https://mcp.so/server/minimax",
+      "target": "_blank",
+      "created_at": "2024-02-15T00:00:00Z",
+      "tags": ["ai", "text-to-speech", "video-generation"]
+    },
+    {
+      "name": "edgeone-pages",
+      "title": "EdgeOne Pages MCP",
+      "description": "An MCP service designed for deploying HTML content to EdgeOne Pages and obtaining an accessible public URL",
+      "author_name": "EdgeOne",
+      "avatar_url": "/images/edgeone.png",
+      "url": "https://mcp.so/server/edgeone-pages",
+      "target": "_blank",
+      "created_at": "2024-03-01T00:00:00Z",
+      "tags": ["hosting", "deployment", "html"]
+    },
+    {
+      "name": "amap-maps",
+      "title": "Amap Maps",
+      "description": "高德地图官方 MCP Server",
+      "author_name": "Amap",
+      "avatar_url": "/images/amap.png",
+      "url": "https://mcp.so/server/amap-maps",
+      "target": "_blank",
+      "created_at": "2024-03-10T00:00:00Z",
+      "tags": ["maps", "location", "china"]
+    }
+  ]
+} 

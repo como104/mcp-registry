@@ -2,6 +2,7 @@
 
 import {
   ChangeEvent,
+  KeyboardEvent,
   useEffect,
   useRef,
   useState,
@@ -26,19 +27,20 @@ export default ({ query }: Props) => {
     if (e.code === "Enter" && !e.shiftKey) {
       if (e.keyCode !== 229) {
         e.preventDefault();
-        handleSubmit("", content);
+        handleSubmit(e.currentTarget.value);
       }
     }
   };
 
-  const handleSubmit = async (keyword: string, question: string) => {
+  const handleSubmit = async (searchTerm: string) => {
+    if (!searchTerm.trim()) return;
+    
     try {
-      const url = `?q=${encodeURIComponent(question)}`;
-      console.log("query url", url);
+      const url = `?q=${encodeURIComponent(searchTerm)}`;
       await router.push(url);
-      setInputDisabled(true); // Disable input after navigation
+      setInputDisabled(true);
     } catch (e) {
-      console.log("search failed: ", e);
+      console.error("Search failed:", e);
       setInputDisabled(false);
     }
   };
@@ -51,45 +53,26 @@ export default ({ query }: Props) => {
   }, [query]);
 
   return (
-    <section className="relative mt-4 md:mt-8">
-      <div className="mx-auto w-full max-w-2xl px-6 text-center">
-        <form
-          method="POST"
-          action="/gpts/search"
-          className="flex items-center relative"
-        >
-          <input
-            type="text"
-            className="text-sm md:text-md flex-1 px-4 py-3 border-2 border-primary bg-white rounded-lg disabled:border-gray-300 disabled:text-gray-300"
-            placeholder="keyword to search"
-            ref={inputRef}
-            value={content}
-            disabled={inputDisabled}
-            onChange={handleInputChange}
-            onKeyDown={handleInputKeydown}
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="absolute right-4 cursor-pointer"
-            onClick={() => {
-              if (content) {
-                handleSubmit("", content);
-              }
-            }}
-          >
-            <polyline points="9 10 4 15 9 20"></polyline>
-            <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
-          </svg>
-        </form>
-      </div>
-    </section>
+    <div className="relative w-full max-w-xl mx-auto px-4">
+      <input
+        type="text"
+        className="w-full rounded-lg border border-gray-300 px-4 py-3 pr-10 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 disabled:bg-gray-50 disabled:text-gray-500"
+        placeholder="Search with keywords"
+        ref={inputRef}
+        value={content}
+        disabled={inputDisabled}
+        onChange={handleInputChange}
+        onKeyDown={handleInputKeydown}
+      />
+      <button 
+        className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 disabled:text-gray-300"
+        onClick={() => handleSubmit(content)}
+        disabled={inputDisabled || !content.trim()}
+      >
+        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </button>
+    </div>
   );
 };
