@@ -1,4 +1,39 @@
-# Release Notes
+# MCP Registry Release Notes
+
+## 2024-04-29
+
+### 重大变更
+
+- 数据存储迁移：从 Supabase 数据库迁移到本地 JSON 文件存储
+  - 新增 `pagejson/projects.json` 用于存储项目数据
+  - 新增 `pagejson/categories.json` 用于存储分类数据
+  - 移除了对 Supabase 的直接依赖
+
+### 功能优化
+
+- 项目标签显示优化
+  - 修改标签数据结构，从逗号分隔字符串改为数组形式
+  - 优化了标签在项目详情页的展示方式
+
+### 类型系统改进
+
+- 新增类型定义文件
+  - `types/projects-data.d.ts`：项目数据类型定义
+  - `types/categories-data.d.ts`：分类数据类型定义
+  - 增强了类型安全性和开发体验
+
+### 开发者体验
+
+- 简化了本地开发流程
+  - 移除了对外部数据库的依赖
+  - 降低了项目启动门槛
+  - 提供了示例数据便于开发和测试
+
+### 配置变更
+
+- 环境变量简化
+  - 移除了 `SUPABASE_URL` 和 `SUPABASE_ANON_KEY` 的依赖
+  - 仅保留 `NEXT_PUBLIC_WEB_URL` 配置
 
 ## 2024-04-18 更新
 
