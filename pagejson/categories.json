@@ -1,0 +1,24 @@
+{
+  "categories": [
+    {
+      "uuid": "1",
+      "name": "servers",
+      "title": "MCP Servers",
+      "description": "Various MCP compatible server implementations",
+      "created_at": "2024-03-20T00:00:00Z",
+      "updated_at": "2024-03-20T00:00:00Z",
+      "status": "created",
+      "sort": 1
+    },
+    {
+      "uuid": "2",
+      "name": "clients",
+      "title": "MCP Clients",
+      "description": "MCP client applications and tools",
+      "created_at": "2024-03-20T00:00:00Z",
+      "updated_at": "2024-03-20T00:00:00Z",
+      "status": "created",
+      "sort": 2
+    }
+  ]
+} 

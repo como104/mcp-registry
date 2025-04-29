@@ -18,7 +18,7 @@ export default ({
   project: Project;
   more_projects?: Project[];
 }) => {
-  const tagsArr = project.tags ? project.tags.split(",") : [];
+  const tagsArr = project.tags || [];
 
   return (
     <div className="mx-auto max-w-7xl px-5 py-4 md:px-10 md:py-4 lg:py-4">
@@ -68,7 +68,7 @@ export default ({
                       type="checkbox"
                       className="mr-2"
                       readOnly
-                      checked={tagsArr && tagsArr.includes(tag)}
+                      checked={true}
                     />
                     {tag}
                   </p>

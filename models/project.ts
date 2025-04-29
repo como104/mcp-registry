@@ -1,88 +1,59 @@
 import { Project } from "@/types/project";
-import { getSupabaseClient } from "./db";
-import serversData from "@/pagejson/servers.json";
+import projectsData from "@/pagejson/projects.json";
+import { ProjectData, ProjectsData } from "@/types/projects-data";
 
 export enum ProjectStatus {
   Created = "created",
   Deleted = "deleted",
 }
 
-export async function insertProject(project: Project) {
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase.from("projects").insert(project);
+function convertToProject(data: ProjectData): Project {
+  return {
+    ...data,
+    target: data.target as "_blank" | "_self"
+  };
+}
 
-  if (error) throw error;
-  return data;
+export async function insertProject(project: Project) {
+  // 在使用JSON文件时，这个方法暂时不可用
+  throw new Error("Insert project is not supported in JSON mode");
 }
 
 export async function findProjectByUuid(
   uuid: string
 ): Promise<Project | undefined> {
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("uuid", uuid)
-    .eq("status", ProjectStatus.Created)
-    .single();
-
-  if (!data) return undefined;
-
-  return data;
+  const project = (projectsData as ProjectsData).projects.find(p => p.uuid === uuid);
+  if (!project) return undefined;
+  return convertToProject(project);
 }
 
 export async function findProjectByName(
   name: string
 ): Promise<Project | undefined> {
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("name", name)
-    .eq("status", ProjectStatus.Created)
-    .single();
-
-  if (!data) return undefined;
-
-  return data;
+  const project = (projectsData as ProjectsData).projects.find(p => p.name === name);
+  if (!project) return undefined;
+  return convertToProject(project);
 }
 
 export async function getProjects(
   page: number,
   limit: number
 ): Promise<Project[]> {
-  const supabase = getSupabaseClient();
-
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("status", ProjectStatus.Created)
-    .order("sort", { ascending: false })
-    .order("created_at", { ascending: false })
-    .range((page - 1) * limit, page * limit - 1);
-
-  if (error) return [];
-
-  return data;
+  const start = (page - 1) * limit;
+  const end = page * limit;
+  return (projectsData as ProjectsData).projects
+    .slice(start, end)
+    .map(convertToProject);
 }
 
 export async function getProjectsCount(): Promise<number> {
-  return serversData.servers.length;
+  return (projectsData as ProjectsData).projects.length;
 }
 
 export async function getProjectsCountByCategory(
   category: string
 ): Promise<number> {
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from("projects")
-    .select("count")
-    .eq("category", category)
-    .eq("status", ProjectStatus.Created);
-
-  if (error) return 0;
-
-  return data?.[0]?.count || 0;
+  return (projectsData as ProjectsData).projects.filter(p => p.category === category).length;
 }
 
 export async function getProjectsByCategory(
@@ -90,20 +61,12 @@ export async function getProjectsByCategory(
   page: number,
   limit: number
 ): Promise<Project[]> {
-  const supabase = getSupabaseClient();
-
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("category", category)
-    .eq("status", ProjectStatus.Created)
-    .order("sort", { ascending: false })
-    .order("created_at", { ascending: false })
-    .range((page - 1) * limit, page * limit - 1);
-
-  if (error) return [];
-
-  return data;
+  const filteredProjects = (projectsData as ProjectsData).projects.filter(p => p.category === category);
+  const start = (page - 1) * limit;
+  const end = page * limit;
+  return filteredProjects
+    .slice(start, end)
+    .map(convertToProject);
 }
 
 export async function getFeaturedProjects(
@@ -112,25 +75,22 @@ export async function getFeaturedProjects(
 ): Promise<Project[]> {
   const start = (page - 1) * limit;
   const end = page * limit;
-  return serversData.servers.slice(start, end);
+  return (projectsData as ProjectsData).projects
+    .filter(p => p.is_featured)
+    .slice(start, end)
+    .map(convertToProject);
 }
 
 export async function getRandomProjects(
   page: number,
   limit: number
 ): Promise<Project[]> {
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("status", ProjectStatus.Created)
-    .order("sort", { ascending: false })
-    .order("created_at", { ascending: false })
-    .range((page - 1) * limit, page * limit - 1);
-
-  if (error) return [];
-
-  return data.sort(() => Math.random() - 0.5);
+  const start = (page - 1) * limit;
+  const end = page * limit;
+  return [...(projectsData as ProjectsData).projects]
+    .sort(() => Math.random() - 0.5)
+    .slice(start, end)
+    .map(convertToProject);
 }
 
 export async function getProjectsWithKeyword(
@@ -138,14 +98,16 @@ export async function getProjectsWithKeyword(
   page: number,
   limit: number
 ): Promise<Project[]> {
-  const filteredProjects = serversData.servers.filter((project) => {
+  const filteredProjects = (projectsData as ProjectsData).projects.filter((project) => {
     const searchStr = `${project.name} ${project.title} ${project.description}`.toLowerCase();
     return searchStr.includes(keyword.toLowerCase());
   });
 
   const start = (page - 1) * limit;
   const end = page * limit;
-  return filteredProjects.slice(start, end);
+  return filteredProjects
+    .slice(start, end)
+    .map(convertToProject);
 }
 
 export async function getProjectsWithoutSummary(
@@ -160,27 +122,15 @@ export async function getProjectsWithoutSummary(
     limit = 20;
   }
 
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*")
-    .is("summary", null)
-    .eq("status", ProjectStatus.Created)
-    .range((page - 1) * limit, page * limit - 1);
-
-  if (error) return [];
-
-  return data;
+  const filteredProjects = (projectsData as ProjectsData).projects.filter(p => !p.summary);
+  const start = (page - 1) * limit;
+  const end = page * limit;
+  return filteredProjects
+    .slice(start, end)
+    .map(convertToProject);
 }
 
 export async function updateProject(uuid: string, project: Partial<Project>) {
-  const supabase = getSupabaseClient();
-  const { data, error } = await supabase
-    .from("projects")
-    .update(project)
-    .eq("uuid", uuid);
-
-  if (error) throw error;
-
-  return data;
+  // 在使用JSON文件时，这个方法暂时不可用
+  throw new Error("Update project is not supported in JSON mode");
 }

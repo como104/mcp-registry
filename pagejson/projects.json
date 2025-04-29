@@ -1,0 +1,48 @@
+{
+  "projects": [
+    {
+      "uuid": "1",
+      "name": "mcp-server-example",
+      "title": "MCP Server Example",
+      "description": "A sample MCP server implementation showing how to build MCP compatible servers",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1234567?v=4",
+      "created_at": "2024-03-20T00:00:00Z",
+      "updated_at": "2024-03-20T00:00:00Z",
+      "status": "created",
+      "author_name": "mcpso",
+      "author_avatar_url": "https://avatars.githubusercontent.com/u/1234567?v=4",
+      "tags": ["mcp", "server", "example"],
+      "category": "servers",
+      "is_featured": true,
+      "sort": 1,
+      "url": "https://github.com/modelcontextprotocol/mcp-server-example",
+      "target": "_self",
+      "content": "# MCP Server Example\nThis is a sample implementation of an MCP compatible server...",
+      "summary": "A reference implementation showing how to build MCP compatible servers with best practices and examples.",
+      "img_url": "https://example.com/preview.png",
+      "features": ["Easy to use", "Well documented", "Production ready"]
+    },
+    {
+      "uuid": "2", 
+      "name": "mcp-server-chatsum",
+      "title": "MCP Chat Summary Server",
+      "description": "An MCP server that provides chat summarization capabilities",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7654321?v=4",
+      "created_at": "2024-03-21T00:00:00Z",
+      "updated_at": "2024-03-21T00:00:00Z",
+      "status": "created",
+      "author_name": "mcpso",
+      "author_avatar_url": "https://avatars.githubusercontent.com/u/7654321?v=4",
+      "tags": ["mcp", "server", "chat", "summarization"],
+      "category": "servers",
+      "is_featured": true,
+      "sort": 2,
+      "url": "https://github.com/modelcontextprotocol/mcp-server-chatsum",
+      "target": "_self",
+      "content": "# MCP Chat Summary Server\nA powerful chat summarization server built on MCP protocol...",
+      "summary": "Advanced chat summarization capabilities powered by state-of-the-art language models.",
+      "img_url": "https://example.com/chatsum-preview.png",
+      "features": ["Real-time summarization", "Multiple language support", "Customizable output"]
+    }
+  ]
+} 
