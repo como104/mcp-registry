@@ -14,6 +14,7 @@ import moment from "moment";
 import { Badge } from "@/components/ui/badge";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export default ({
   category,
@@ -184,7 +185,33 @@ export default ({
                 <span>Recommend Servers</span>
               </div>
               <div className="flex flex-col gap-4 mt-4">
-                {more_projects && <Projects projects={more_projects} />}
+                {more_projects?.map((project) => (
+                  <Link
+                    key={project.uuid}
+                    href={project.target === "_blank" ? project.url || "" : `/server/${project.name}`}
+                    target={project.target || "_self"}
+                  >
+                    <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md">
+                      <div className="flex items-center space-x-3">
+                        {project.avatar_url ? (
+                          <img
+                            src={project.avatar_url}
+                            alt={project.title}
+                            className="h-10 w-10 rounded-lg object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
+                            <span className="text-xl text-gray-400">?</span>
+                          </div>
+                        )}
+                        <div className="flex-1">
+                          <h3 className="font-medium text-gray-900">{project.title}</h3>
+                          <p className="text-sm text-gray-600 line-clamp-2">{project.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

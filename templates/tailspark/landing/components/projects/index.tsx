@@ -41,6 +41,10 @@ export default ({
 }) => {
   const [isNavCollapsed, setIsNavCollapsed] = useState(false);
 
+  if (!Array.isArray(projects)) {
+    projects = [];
+  }
+
   return (
     <section className="relative">
       <div className="mx-auto max-w-7xl px-5 py-4 md:px-10 md:py-4 lg:py-4">
@@ -146,6 +150,16 @@ export default ({
   );
 };
 
-export const recommendProjects = (projects: Project[]) => {
-  return projects.filter((project) => project.is_featured);
-};
+export function recommendProjects(projects: Project[]) {
+  if (!Array.isArray(projects) || projects.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projects.map((item: Project, idx: number) => (
+        <ProjectItem key={idx} project={item} />
+      ))}
+    </div>
+  );
+}
