@@ -145,3 +145,7 @@ export default ({
     </section>
   );
 };
+
+export const recommendProjects = (projects: Project[]) => {
+  return projects.filter((project) => project.is_featured);
+};

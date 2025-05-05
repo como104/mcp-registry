@@ -19,7 +19,7 @@
       "target": "_self",
       "content": "# MCP Server Example\nThis is a sample implementation of an MCP compatible server...",
       "summary": "A reference implementation showing how to build MCP compatible servers with best practices and examples.",
-      "img_url": "https://example.com/preview.png",
+      "img_url": "https://avatars.githubusercontent.com/u/1234567?v=4",
       "features": ["Easy to use", "Well documented", "Production ready"]
     },
     {
