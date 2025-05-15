@@ -3,7 +3,7 @@ import Hero from "../components/hero";
 import { Page } from "@/types/landing";
 import { Project } from "@/types/project";
 import Projects from "../components/projects";
-import Search from "../components/search";
+// Search component is now rendered within Header
 
 /**
  * 首页组件
@@ -22,13 +22,16 @@ export default function ({
   projects: Project[];
   projectsCount: number;
 }) {
+  // Extract search query from page data if available, or from URL query params
+  const searchQuery = page?.metadata?.searchQuery; // Assuming searchQuery might come from page data
+
   return (
     <div>
-      {/* 英雄区域，当page.hero存在时显示 */}
+      {/* Hero区域，Header现在内部处理搜索框 */}
       {page.hero && <Hero hero={page.hero} count={projectsCount} />}
       
-      {/* 搜索组件 */}
-      <Search />
+      {/* Search component is removed from here, it's now part of the Header or another specific section */}
+      {/* If you need a search bar here specifically, it would be a different instance */}
       
       {/* 项目列表组件 */}
       <Projects projects={projects} />

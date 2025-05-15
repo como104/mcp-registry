@@ -23,7 +23,11 @@ export interface Metadata {
   title?: string;
   description?: string;
   keywords?: string;
+  image?: string;
+  url?: string;
   canonical?: string;
+  searchQuery?: string;
+  [key: string]: any;
 }
 
 export interface User {

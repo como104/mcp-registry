@@ -2,12 +2,25 @@ import { Menu, Transition } from "@headlessui/react";
 
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { Fragment } from "react";
+import { Item } from "@/types/landing";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default () => {
+interface DropDownProps {
+  navItems?: Item[];
+}
+
+export default ({ navItems = [] }: DropDownProps) => {
+  const itemsToRender = navItems.length > 0 ? navItems : [
+    { title: "Pricing", url: "/pricing" },
+    { title: "Feed", url: "/feed" },
+    { title: "Extension", url: "/extension" },
+    { title: "GPTs", url: "https://chat.openai.com/g/g-EBKM6RsBl-gpts-works", target: "_blank" },
+    { title: "Dashboard", url: "/dashboard/my-gpts" },
+  ];
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -28,72 +41,22 @@ export default () => {
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="/pricing"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  Pricing
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="/feed"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  Feed
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="/extension"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  Extension
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="https://chat.openai.com/g/g-EBKM6RsBl-gpts-works"
-                  target="_blank"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  GPTs
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="/dashboard/my-gpts"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  Dashboard
-                </a>
-              )}
-            </Menu.Item>
+            {itemsToRender.map((item, index) => (
+              <Menu.Item key={item.url || item.title || index}>
+                {({ active }) => (
+                  <a
+                    href={item.url}
+                    target={item.target}
+                    className={classNames(
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      "block px-4 py-2 text-sm"
+                    )}
+                  >
+                    {item.title}
+                  </a>
+                )}
+              </Menu.Item>
+            ))}
           </div>
         </Menu.Items>
       </Transition>

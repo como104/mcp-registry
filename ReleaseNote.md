@@ -1,3 +1,22 @@
+## YYYY-MM-DD (Current Session)
+
+### Hero 图片轮播 (`templates/tailspark/landing/components/hero/`)
+
+- **问题修复 (`HeroSlider.tsx`)**: 解决了 `slide-2.jpg` 图片无效导致加载失败和重复网络请求的问题。
+  - 更新了 `scripts/prepare-hero-images.sh` 中的图片下载链接。
+  - 通过脚本成功下载了有效的 `slide-2.jpg`。
+  - 在确认图片问题解决后，移除了 `Image` 组件中的 `unoptimized={true}` 属性，恢复 Next.js 图片优化。
+- **Hydration 错误修复 (`HeroSlider.tsx`, `hero/index.tsx`)**: 解决了 `HeroSlider` 组件因客户端特有逻辑导致的 Next.js hydration 错误。
+  - 在父组件 `hero/index.tsx` 中，将 `HeroSlider` 改为使用 `next/dynamic` 动态导入，并设置 `ssr: false`。
+
+### 搜索组件 (`templates/tailspark/landing/components/search/index.tsx`)
+
+- **问题修复**: 修复了搜索框在提交一次搜索后被禁用，无法继续输入新内容的问题。
+  - 从 `handleSubmit` 函数中移除了 `setInputDisabled(true);` 的调用。
+- **功能增强**: 实现了当搜索框内容为空时，提交搜索（点击按钮或按回车）将导航至显示全部项目的结果页。
+  - 修改 `handleSubmit` 函数，在搜索词为空时构建导航 URL 为 `?q=`。
+  - 更新了搜索按钮的 `disabled` 属性，允许在输入为空时提交搜索。
+
 # MCP Registry Release Notes
 
 ## 2024-04-30
