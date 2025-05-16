@@ -1,4 +1,4 @@
-## YYYY-MM-DD (Current Session)
+## 2024-05-15 (Current Session)
 
 ### Hero 图片轮播 (`templates/tailspark/landing/components/hero/`)
 
