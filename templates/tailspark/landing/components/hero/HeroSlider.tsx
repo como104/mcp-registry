@@ -35,7 +35,7 @@ export const HeroSlider: React.FC<{ slides: HeroSlide[] }> = ({ slides }) => {
   };
 
   return (
-    <div role="region" aria-label="Hero image carousel" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div role="region" aria-label="Hero image carousel" className="mx-auto max-w-[115rem] px-2 sm:px-3 lg:px-4">
       <div className="overflow-hidden rounded-xl">
         <Swiper
           modules={[Autoplay, Pagination, Navigation]}
@@ -58,12 +58,12 @@ export const HeroSlider: React.FC<{ slides: HeroSlide[] }> = ({ slides }) => {
                   alt={slide.title || "Hero image"}
                   fill
                   priority={index === realIndex}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="90vw"
                   className="object-cover"
                   onError={handleImageError}
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-40">
-                  <div className="container mx-auto h-full px-4 py-12 sm:py-16 lg:py-20">
+                  <div className="mx-auto max-w-[90rem] h-full px-2 md:px-4 py-12 sm:py-16 lg:py-20">
                     <div className="flex h-full flex-col items-center justify-center text-center">
                       <h1 className="max-w-4xl text-3xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
                         {slide.title}

@@ -47,7 +47,7 @@ export default ({
 
   return (
     <section className="relative">
-      <div className="mx-auto max-w-7xl px-5 py-4 md:px-10 md:py-4 lg:py-4">
+      <div className="mx-auto max-w-[90rem] px-2 py-4 md:px-4 lg:px-4">
         {/* View All 链接 */}
         <div className="flex justify-end mb-6">
           <Link href="/view-all" className="text-orange-500 hover:text-orange-600">

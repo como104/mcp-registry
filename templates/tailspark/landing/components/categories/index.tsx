@@ -12,7 +12,7 @@ export default function ({
   projects: Project[];
 }) {
   return (
-    <div className="mx-auto max-w-7xl px-5 py-4 md:px-10 md:py-4 lg:py-4">
+    <div className="mx-auto max-w-[90rem] px-2 py-4 md:px-4 lg:px-4">
       <Crumb />
       <div className="mt-16 text-center">
         <h1 className="text-4xl text-primary font-bold mb-2">
