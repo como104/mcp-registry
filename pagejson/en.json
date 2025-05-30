@@ -15,17 +15,17 @@
     "nav": {
       "items": [
         {
-          "title": "Categories",
+          "title": "分类",
           "url": "/categories",
           "target": "_self"
         },
         {
-          "title": "Submit",
+          "title": "仓库",
           "url": "https://github.com/chatmcp/mcp-directory/issues/1",
           "target": "_blank"
         },
         {
-          "title": "Telegram",
+          "title": "联系我们",
           "url": "https://t.me/+N0gv4O9SXio2YWU1",
           "target": "_blank"
         },

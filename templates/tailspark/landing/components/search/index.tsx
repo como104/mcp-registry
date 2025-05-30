@@ -77,7 +77,7 @@ export default ({ query, compact }: Props) => {
       <input
         type="text"
         className={inputClasses}
-        placeholder={compact ? "Search MCP..." : "Search with keywords"}
+        placeholder={compact ? "搜索MCP..." : "Search with keywords"}
         ref={inputRef}
         value={content}
         disabled={inputDisabled}
